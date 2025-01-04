@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to your Dashboard, {{ user.username }}!</h1>
+
+        <p>Here are some study groups you might be interested in:</p>
+        
+        <div class="study-groups">
+            {% for group in study_groups %}
+            <div class="group">
+                <h3>{{ group.name }}</h3>
+                <p>{{ group.description }}</p>
+                <button class="button">Join Group</button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    </div>
+</body>
+</html>
