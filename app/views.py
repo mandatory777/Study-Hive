@@ -1,36 +1,69 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login  # Renamed to auth_login for clarity
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages  # Import the messages framework
 from .models import StudyGroup
 from .forms import StudyGroupForm
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'home.html')
 
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2']
+
+    # Custom error messages
+    error_messages = {
+        'username': {
+            'unique': "This username is already taken. Please choose a different one.",
+        },
+        'password_mismatch': "The two password fields didn't match. Please check and try again.",
+    }
+
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()  
             auth_login(request, user)  
+            messages.success(request, 'Your account has been created successfully! You are now logged in.')
             return redirect('dashboard')  
+        else:
+            messages.error(request, 'There was an issue with your registration. Please check the form below.')
     else:
-        form = UserCreationForm()  
+        form = CustomUserCreationForm()
+
     return render(request, 'register.html', {'form': form})
 
 def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('study_group_list')  
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
-            auth_login(request, user)  
-            return redirect('study_group_list')  
+            auth_login(request, user)
+            request.session['username'] = ''
+            request.session['password'] = ''
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password')
+            request.session['username'] = username
+            request.session['password'] = password
+            return render(request, 'login.html')
+
+    
+    request.session['username'] = ''
+    request.session['password'] = ''
     return render(request, 'login.html')
+
 
 def logout_view(request):
     logout(request)  
