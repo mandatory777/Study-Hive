@@ -1,34 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Groups</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h1>Your Study Groups</h1>
+{% block content %}
+    <h2>Study Groups</h2>
+    <ul>
+        {% for group in groups %}
+            <li>
+                <a href="{% url 'group_detail' group.id %}">{{ group.name }}</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'study_group_update' pk=group.id %}">Edit</a>
+                    <a href="{% url 'study_group_delete' pk=group.id %}">Delete</a>
+                {% else %}
+                    <a href="{% url 'join_group' group.id %}">Join</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 
-    {% if study_groups %}
-        <ul>
-            {% for group in study_groups %}
-                <li>
-                    <h2>{{ group.name }}</h2>
-                    <p>{{ group.description }}</p>
-                    <a href="{% url 'study_group_update' group.pk %}">Edit</a> |
-                    <a href="{% url 'study_group_delete' group.pk %}">Delete</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You haven't created any study groups yet.</p>
+    {% if user.is_staff %}
+        <a href="{% url 'create_study_group' %}">Create a new study group</a>
     {% endif %}
-
-    <br>
-    <a href="{% url 'create_study_group' %}">Create a new Study Group</a>
-    <br>
-    <a href="{% url 'home' %}">Back to Home</a>
-</body>
-</html>
+{% endblock %}

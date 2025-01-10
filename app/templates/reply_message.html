@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reply to Message</title>
+</head>
+<body>
+    <h2>Reply to: {{ original_message.subject }}</h2>
+    
+    <p><strong>Original Message:</strong></p>
+    <p><strong>From:</strong> {{ original_message.sender.username }}</p>
+    <p><strong>Sent:</strong> {{ original_message.timestamp }}</p>
+    <p><strong>Message:</strong> {{ original_message.body }}</p>
+
+    <h3>Your Reply</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Reply</button>
+    </form>
+
+    <a href="{% url 'inbox' %}">Back to Inbox</a>
+</body>
+</html>

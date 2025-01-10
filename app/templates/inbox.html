@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox</h1>
+    
+    <form method="get">
+        <input type="text" name="q" value="{{ search_query }}" placeholder="Search messages">
+        <button type="submit">Search</button>
+    </form>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>From</th>
+                <th>Received</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in page_obj %}
+                <tr>
+                    <td>{{ message.subject }}</td>
+                    <td>{{ message.sender.username }}</td>
+                    <td>{{ message.timestamp }}</td>
+                    <td><a href="{% url 'view_message' message.id %}">View</a> | <a href="{% url 'reply_message' message.id %}">Reply</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

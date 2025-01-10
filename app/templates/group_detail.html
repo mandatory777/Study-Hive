@@ -1,0 +1,18 @@
+<h1>{{ group.name }}</h1>
+<p>{{ group.description }}</p>
+
+{% if user in group.members.all %}
+    <p>You are already a member of this group!</p>
+{% else %}
+    <form method="POST" action="{% url 'join_group' group.id %}">
+        {% csrf_token %}
+        <button type="submit">Join Group</button>
+    </form>
+{% endif %}
+
+<h3>Group Members:</h3>
+<ul>
+    {% for member in group.members.all %}
+        <li>{{ member.username }}</li>
+    {% endfor %}
+</ul>
