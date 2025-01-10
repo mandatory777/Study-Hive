@@ -1,30 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Homepage</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Study Group Platform</h1>
-
-        {% if user.is_authenticated %}
-            <p>Welcome, {{ user.username }}!</p>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a> | 
-            <a href="{% url 'register' %}">Register</a>
-        {% endif %}
-    </header>
-
-    <main>
-        <h2>Explore Study Groups</h2>
-        <p>Browse available study groups, join the ones that interest you, and start collaborating!</p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Study Group Platform. All rights reserved.</p>
-    </footer>
+    <h1>Welcome to the Study Group Platform</h1>
+    <a href="{% url 'signup' %}">Sign Up</a>
+    <a href="{% url 'login' %}">Login</a>
 </body>
 </html>

@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Study Group</title>
+    <title>Delete Study Group</title>
 </head>
 <body>
-    <h2>Update Study Group</h2>
+    <h2>Are you sure you want to delete the study group "{{ study_group.name }}"?</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update Group</button>
+        <button type="submit">Yes, Delete</button>
     </form>
+    <a href="{% url 'study_group_list' %}">Cancel</a>
 </body>
 </html>

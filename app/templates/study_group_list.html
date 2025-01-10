@@ -1,22 +1,21 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<!-- templates/study_group_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Groups</title>
+</head>
+<body>
     <h2>Study Groups</h2>
     <ul>
-        {% for group in groups %}
-            <li>
-                <a href="{% url 'group_detail' group.id %}">{{ group.name }}</a>
-                {% if user.is_staff %}
-                    <a href="{% url 'study_group_update' pk=group.id %}">Edit</a>
-                    <a href="{% url 'study_group_delete' pk=group.id %}">Delete</a>
-                {% else %}
-                    <a href="{% url 'join_group' group.id %}">Join</a>
-                {% endif %}
+        {% for group in study_groups %}
+            <li>{{ group.name }} - {{ group.description }}
+                <a href="{% url 'update_study_group' group.pk %}">Edit</a>
+                <a href="{% url 'delete_study_group' group.pk %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
-
-    {% if user.is_staff %}
-        <a href="{% url 'create_study_group' %}">Create a new study group</a>
-    {% endif %}
-{% endblock %}
+    <a href="{% url 'create_study_group' %}">Create New Group</a>
+</body>
+</html>

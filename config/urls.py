@@ -14,24 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
 from django.urls import path
 from app import views
-
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('admin/', admin.site.urls),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('signup/', views.signup, name='signup'),
+    path('create_study_group/', views.create_study_group, name='create_study_group'),
+    path('update_study_group/<int:pk>/', views.update_study_group, name='update_study_group'),
+    path('delete_study_group/<int:pk>/', views.delete_study_group, name='delete_study_group'),
+    path('study_group_list/', views.study_group_list, name='study_group_list'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('study_groups/', views.study_groups_list, name='study_group_list'),
-    path('study_groups/create/', views.create_study_group, name='create_study_group'),
-    path('study_groups/update/<int:pk>/', views.update_study_group, name='update_study_group'),
-    path('study_groups/delete/<int:pk>/', views.delete_study_group, name='delete_study_group'),
-    path('group/<int:group_id>/', views.group_detail, name='group_detail'),
-    path('join_group/<int:group_id>/', views.join_group, name='join_group'),
 ]
-
-    
-
