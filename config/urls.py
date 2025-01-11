@@ -25,9 +25,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
    
     path('profile/', views.profile, name='profile'),
+
     path('edit_bio/', views.edit_bio, name='edit_bio'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    
+    path('edit-profile/', views.edit_profile, name='edit_profile'),
     path('create_study_group/', views.create_study_group, name='create_study_group'),
     path('update_study_group/<int:pk>/', views.update_study_group, name='update_study_group'),
     path('delete_study_group/<int:pk>/', views.delete_study_group, name='delete_study_group'),

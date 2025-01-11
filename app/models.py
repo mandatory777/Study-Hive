@@ -7,10 +7,10 @@ from django.dispatch import receiver
 class StudyGroup(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1) 
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(default=timezone.now)
     members = models.ManyToManyField(User, related_name='joined_groups', blank=True)
-    users = models.ManyToManyField(User, related_name="study_groups", blank=True)
+
 
     class Meta:
         permissions = [

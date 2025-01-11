@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Profile</h1>
-<h3>Username: {{ profile.user.username }}</h3>
-<p>Bio: {{ profile.bio }}</p> 
+<h1>Edit Profile</h1>
+<form method="post">
+    {% csrf_token %}
+    
+    <h3>Username</h3>
+    {{ user_form.as_p }} 
+    
+    <h3>Bio</h3>
+    {{ profile_form.as_p }}  
 
-<h4>Your Joined Study Groups</h4>
-{% if study_groups %}
-    <ul>
-        {% for group in study_groups %}
-            <li>{{ group.name }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>You have not joined any study groups yet.</p>
-{% endif %}
+    <button type="submit">Save Changes</button>
+</form>
 {% endblock %}
+

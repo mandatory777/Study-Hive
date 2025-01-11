@@ -10,6 +10,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .forms import BioForm
+from .forms import ProfileForm
+from .forms import BioForm, UserForm
 
 
 def home(request):
@@ -125,6 +127,26 @@ def profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     study_groups = profile.study_groups.all()  
     return render(request, 'profile.html', {'profile': profile, 'study_groups': study_groups})
+
+
+@login_required
+def edit_profile(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    
+    if request.method == 'POST':
+        profile_form = BioForm(request.POST, instance=profile)
+        user_form = UserForm(request.POST, instance=request.user)
+        
+        if profile_form.is_valid() and user_form.is_valid():
+            profile_form.save()  
+            user_form.save() 
+            messages.success(request, "Your profile has been updated!")
+            return redirect('profile')
+    else:
+        profile_form = BioForm(instance=profile)
+        user_form = UserForm(instance=request.user)
+    
+    return render(request, 'edit_profile.html', {'profile_form': profile_form, 'user_form': user_form})
 
 
 @login_required
