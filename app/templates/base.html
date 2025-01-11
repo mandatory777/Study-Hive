@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Groups</title>
-    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
 </head>
 <body>
     <nav>
+        <div class="logo">
+            <a href="{% url 'study_group_list' %}">Study Hive</a>
+        </div>
         <ul>
             <li><a href="{% url 'study_group_list' %}">Home</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'joined_groups' %}">Your Groups</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>  
+                <li><a href="{% url 'profile' %}">Profile</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
@@ -26,5 +29,6 @@
         {% block content %}
         {% endblock %}
     </div>
+
 </body>
 </html>

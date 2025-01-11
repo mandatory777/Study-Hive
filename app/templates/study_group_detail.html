@@ -10,8 +10,12 @@
             <li>{{ user.username }}</li>
         {% endfor %}
     </ul>
-    {% if user == study_group.created_by or user.username == 'adavis' %}
-        <a href="{% url 'update_study_group' study_group.id %}" class="btn">Edit Group</a>
-        <a href="{% url 'delete_study_group' study_group.id %}" class="btn">Delete Group</a>
+    
+    {% if user.username == 'adavis' %}
+        <div class="admin-buttons">
+            <a href="{% url 'create_study_group' %}" class="btn create-btn">Create Group</a>
+            <a href="{% url 'update_study_group' study_group.id %}" class="btn update-btn">Update Group</a>
+            <a href="{% url 'delete_study_group' study_group.id %}" class="btn delete-btn">Delete Group</a>
+        </div>
     {% endif %}
 {% endblock %}

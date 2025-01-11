@@ -150,6 +150,23 @@ def edit_profile(request):
 
 
 @login_required
+def profile_view(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    
+    if request.method == 'POST':
+        bio = request.POST.get('bio')  #bio from the form
+        if bio != profile.bio:
+            profile.bio = bio
+            profile.save()
+            return redirect('profile') 
+   
+    study_groups = profile.user.joined_groups.all()  
+    return render(request, 'profile.html', {'profile': profile, 'study_groups': study_groups})
+
+
+
+
+@login_required
 def edit_bio(request):
     profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
