@@ -5,26 +5,39 @@
         <h1>Create Your Account</h1>
         <form method="POST" class="sign-up-form">
             {% csrf_token %}
-            
-            <div class="form-group">
+            {{form.as_p}}
+            {% comment %} <div class="form-group">
                 <label for="username">Username</label>
                 {{ form.username }}
-            </div>
+            </div> {% endcomment %}
+            {% comment %} {{form.username.label}}
+            {{form.username}}
+            
 
-            <div class="form-group">
+            {{form.email.label}}
+            {{form.email}}
+
+            {{form.password1.label}}
+            {{form.password1}}
+
+            {{form.password2.label}}
+            {{form.password2}} {% endcomment %}
+
+            {% comment %} <div class="form-group">
                 <label for="email">Email</label>
                 {{ form.email }}
             </div>
-
+            
             <div class="form-group">
-                <label for="password">Password</label>
-                {{ form.password }}
+                <label for="password1">Password</label>
+                {{ form.password1}}
             </div>
 
             <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" required>
-            </div>
+                <label for="password2">Confirm Password</label>
+                {{ form.password2}}
+                {% comment %} <input type="password" name="confirm_password" id="confirm_password" required> {% endcomment %}
+            {% comment %} </div> {% endcomment %} 
 
             <button type="submit" class="btn">Sign Up</button>
         </form>

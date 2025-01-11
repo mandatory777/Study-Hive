@@ -26,10 +26,13 @@ class CustomLoginView(LoginView):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
+        print("here")
         if form.is_valid():
+            print(form)
             user = form.save()
- # Only create the profile if it dont exist already
+     # Only create the profile if it dont exist already
             if not Profile.objects.filter(user=user).exists():
+                
                 Profile.objects.create(user=user)
 
             return redirect('login') 
