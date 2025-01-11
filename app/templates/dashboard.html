@@ -1,13 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome, {{ user.username }}</h2>
-    <a href="{% url 'study_group_list' %}">View Study Groups</a>
-</body>
-</html>
+{% block content %}
+    <div class="main-container">
+        <div class="container">
+            <h2>Welcome, {{ user.username }}</h2>
+
+            <div class="button-container">
+                <a href="{% url 'logout' %}" class="btn">Logout</a>
+
+                {% if user.username == 'adavis' %}
+                    <a href="{% url 'create_study_group' %}" class="btn">Create Group</a>
+                {% endif %}
+            </div>
+
+            <h3>Your Study Groups</h3>
+            <ul>
+                {% for group in study_groups %}
+                    <li>
+                        {{ group.name }}
+                        {% if user.username == 'adavis' %}
+                            <a href="{% url 'update_study_group' group.pk %}" class="btn">Update</a>
+                            <a href="{% url 'delete_study_group' group.pk %}" class="btn">Delete</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

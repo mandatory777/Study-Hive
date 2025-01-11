@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Profile</h1>
+<h3>Username: {{ profile.user.username }}</h3>
+<p>Bio: {{ profile.bio }}</p> 
+
+<h4>Your Joined Study Groups</h4>
+{% if study_groups %}
+    <ul>
+        {% for group in study_groups %}
+            <li>{{ group.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have not joined any study groups yet.</p>
+{% endif %}
+{% endblock %}

@@ -15,19 +15,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from app import views
-from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
+from app import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('admin/', admin.site.urls),
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('signup/', views.signup, name='signup'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', views.logout_view, name='logout'),
+   
+    path('profile/', views.profile, name='profile'),
+    path('edit_bio/', views.edit_bio, name='edit_bio'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    
     path('create_study_group/', views.create_study_group, name='create_study_group'),
     path('update_study_group/<int:pk>/', views.update_study_group, name='update_study_group'),
     path('delete_study_group/<int:pk>/', views.delete_study_group, name='delete_study_group'),
     path('study_group_list/', views.study_group_list, name='study_group_list'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    path('join_study_group/<int:pk>/', views.join_study_group, name='join_study_group'),
+    path('joined-groups/', views.joined_groups, name='joined_groups'),
+    path('study-groups/', views.study_group_list, name='study_group_list'),
+    path('study-groups/<int:pk>/', views.study_group_detail, name='study_group_detail'),
 ]

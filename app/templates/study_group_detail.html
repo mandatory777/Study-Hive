@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ study_group.name }}</h1>
+    <p>{{ study_group.description }}</p>
+    <p>Created by: {{ study_group.created_by.username }}</p>
+    <p>Members:</p>
+    <ul>
+        {% for user in study_group.users.all %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    {% if user == study_group.created_by or user.username == 'adavis' %}
+        <a href="{% url 'update_study_group' study_group.id %}" class="btn">Edit Group</a>
+        <a href="{% url 'delete_study_group' study_group.id %}" class="btn">Delete Group</a>
+    {% endif %}
+{% endblock %}

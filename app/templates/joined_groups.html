@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Your Joined Groups</h1>
+    {% if joined_groups %}
+        <ul>
+            {% for group in joined_groups %}
+                <li>{{ group.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't joined any groups yet.</p>
+    {% endif %}
+{% endblock %}

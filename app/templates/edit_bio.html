@@ -1,10 +1,9 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block content %}
-    <h2>Update Study Group</h2>
+    <h1>Edit Bio</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Update</button>
+        <button type="submit">Save</button>
     </form>
 {% endblock %}

@@ -1,13 +1,13 @@
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'django-insecure-pzer^+3evboj_s%nn770g4)5g27^66x_$whmb^pko#az(b(yd-'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -15,7 +15,7 @@ ALLOWED_HOSTS = []
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 
-# Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',  # This should be your app name, assuming 'app' is the name of your study group app
+    'app', 
 ]
 
 MIDDLEWARE = [
@@ -41,7 +41,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Make sure the templates folder exists
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,8 +57,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# Using SQLite for simplicity
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -67,7 +66,7 @@ DATABASES = {
 }
 
 
-# Password validation
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -84,7 +83,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -94,20 +93,18 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Make sure your static files are placed here
+    BASE_DIR / 'static',  
 ]
 
 
-# Default primary key field type
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirect after login to a dashboard or homepage
-LOGIN_REDIRECT_URL = 'dashboard'  # Make sure you have a 'dashboard' view in your app
 
-# Configure the 'StudyGroup' model in your app
-# The 'app' folder should have a models.py file where the StudyGroup is defined.
+LOGIN_REDIRECT_URL = 'dashboard' 
 
+LOGOUT_REDIRECT_URL = 'home'
