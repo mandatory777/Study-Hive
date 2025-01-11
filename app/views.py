@@ -6,12 +6,15 @@ from .forms import SignupForm, StudyGroupForm
 from .models import StudyGroup, Profile
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseForbidden
-from django.db.models.signals import post_save
+#from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from .forms import BioForm
+from django.db.models.signals import post_save
 from .forms import ProfileForm
-from .forms import BioForm, UserForm
+from .forms import BioForm, UserForm, SignupForm
+from .forms import SignupForm
+
+
 
 
 def home(request):
@@ -25,13 +28,14 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            messages.success(request, f"Welcome, {user.username}! You have successfully signed up.")
-            return redirect('home')
-        else:
-            messages.error(request, "Signup failed. Please check the form and try again.")
+ # Only create the profile if it dont exist already
+            if not Profile.objects.filter(user=user).exists():
+                Profile.objects.create(user=user)
+
+            return redirect('login') 
     else:
         form = SignupForm()
+
     return render(request, 'signup.html', {'form': form})
 
 def logout_view(request):
@@ -186,7 +190,8 @@ def dashboard(request):
     study_groups = StudyGroup.objects.all() 
     return render(request, 'dashboard.html', {'study_groups': study_groups})
 
-#@receiver(post_save, sender=User)
-#def create_profile(sender, instance, created, **kwargs):
-    #if created:
-        #Profile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created: #only creating if it dont exist
+        if not Profile.objects.filter(user=instance).exists():
+            Profile.objects.create(user=instance)
